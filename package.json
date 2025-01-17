@@ -1,0 +1,76 @@
+{
+  "name": "chord-picker-pro",
+  "version": "1.1.0",
+  "private": true,
+  "homepage": "https://GunjanGrunge.github.io/chordpickerpro",
+  "main": "electron.js",
+  "dependencies": {
+    "@tonaljs/chord": "^4.10.2",
+    "@tonaljs/scale": "^4.13.1",
+    "@tonaljs/tonal": "^4.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tonal": "^6.4.0",
+    "tone": "^14.7.77"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "concurrently": "^8.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "^25.0.0",
+    "electron-builder": "^24.4.0",
+    "vite": "^4.3.9",
+    "wait-on": "^7.0.1",
+    "gh-pages": "^4.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:serve": "concurrently -k \"vite --host\" \"wait-on http://localhost:5173 && electron .\"",
+    "electron:build": "vite build && electron-builder",
+    "electron:dev": "cross-env NODE_ENV=development electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "make:win": "npm run build && electron-builder --win --x64",
+    "deploy": "gh-pages -d docs"
+  },
+  "build": {
+    "appId": "com.chordpickerpro.app",
+    "productName": "Chord Picker Pro",
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron.js",
+      "build/guitar-pick_icon-icons.com_60160.ico"
+    ],
+    "win": {
+      "icon": "build/guitar-pick_icon-icons.com_60160.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "mac": {
+      "icon": "build/icons/icon.icns",
+      "target": ["dmg"]
+    },
+    "linux": {
+      "icon": "build/icons/icon.png",
+      "target": ["AppImage"]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Chord Picker Pro"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+.chord-display {
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0,255,157,0.1);
+}
+
+.chord-name {
+  font-size: 2rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  margin: 20px 0;
+  text-shadow: 0 0 10px rgba(0,255,157,0.3);
+}
+
+.notes {
+  background: var(--bg-primary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: 'Poppins', monospace;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  margin-top: 20px;
+}
+
+.chord-display h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

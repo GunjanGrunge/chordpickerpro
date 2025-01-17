@@ -1,0 +1,110 @@
+.scale-display {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border-radius: 15px;
+  padding: 30px;
+  margin: 40px 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.scale-info, .chord-info {
+  margin: 20px 0;
+}
+
+.scale-notes, .scale-chords {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-family: 'Poppins', monospace;
+  font-size: 1.2em;
+  color: var(--text-primary);
+  margin: 20px 0;
+  padding: 15px;
+  background: var(--bg-primary);
+  border-radius: 10px;
+  border: 1px solid var(--accent-primary);
+}
+
+.scale-notes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  border: 1px solid var(--accent-primary);
+  margin-top: 10px;
+}
+
+.scale-note {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: var(--bg-primary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  min-width: 60px;
+  text-align: center;
+  border: 2px solid var(--accent-primary);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.scale-note:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+  background: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.scale-note-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  min-width: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scale-note-container:hover .scale-note {
+  background: var(--accent-primary);
+  color: var(--text-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+
+.scale-note-container:active .scale-note {
+  transform: translateY(-1px);
+}
+
+.scale-note-container:hover .scale-degree {
+  opacity: 1;
+  color: var(--accent-secondary);
+  color: var(--accent-primary);
+}
+
+.scale-note.active {
+  background: var(--accent-primary);
+  color: var(--text-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+
+.scale-degree {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+h3 {
+  color: var(--accent-primary);
+  font-size: 1.4em;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

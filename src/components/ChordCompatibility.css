@@ -1,0 +1,129 @@
+.chord-compatibility {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.chord-compatibility h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.compatibility-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.compatibility-chord {
+  padding: 1.25rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.compatibility-chord::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.compatibility-chord:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.compatibility-chord:active {
+  transform: translateY(1px);
+}
+
+.strong-compatibility {
+  background: linear-gradient(135deg, var(--success), #059669);
+  color: white;
+}
+
+.medium-compatibility {
+  background: linear-gradient(135deg, var(--warning), #d97706);
+  color: var(--bg-primary);
+}
+
+.weak-compatibility {
+  background: linear-gradient(135deg, #f97316, #c2410c);
+  color: white;
+}
+
+.compatibility-legend {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: var(--bg-primary);
+  border-radius: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--bg-secondary);
+}
+
+.legend-item::before {
+  content: '';
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend-item.strong-compatibility::before {
+  background: var(--success);
+}
+
+.legend-item.medium-compatibility::before {
+  background: var(--warning);
+}
+
+.legend-item.weak-compatibility::before {
+  background: #f97316;
+}
+
+@media (max-width: 768px) {
+  .compatibility-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  .compatibility-legend {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .legend-item {
+    justify-content: center;
+  }
+}

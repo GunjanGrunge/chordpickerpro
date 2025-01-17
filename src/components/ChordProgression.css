@@ -1,0 +1,57 @@
+.chord-progression {
+  margin: 1rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progression-chords {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.progression-chord {
+  padding: 1rem 2rem;
+  background: var(--bg-primary);
+  border: 2px solid var(--accent-primary);
+  color: var(--text-primary);
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.progression-chord:hover {
+  background: var(--accent-primary);
+  transform: translateY(-2px);
+  color: var(--bg-primary);
+}
+
+.progression-chord:active {
+  transform: scale(0.95);
+}
+
+.chord-progression h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.chord-progression p {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.progression-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
