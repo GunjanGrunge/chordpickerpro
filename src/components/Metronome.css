@@ -3,10 +3,56 @@
   grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 2rem;
-  padding: 1rem;
-  background: var(--bg-secondary);
-  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
+  border-radius: 1rem;
   margin: 1rem 0;
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.metronome-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metronome-header svg {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-primary);
+  animation: swing 1s ease-in-out infinite;
+  transform-origin: top;
+}
+
+.tempo-display {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.metronome-controls {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.play-button {
+  background: var(--accent-primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.play-button.active {
+  background: var(--danger);
+  animation: pulse 2s infinite;
 }
 
 .tempo-control {
@@ -18,6 +64,76 @@
   flex-direction: column;
   gap: 0.5rem;
   color: var(--text-secondary);
+}
+
+.tempo-slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 3px;
+  outline: none;
+}
+
+.tempo-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--text-primary);
+  border: 2px solid var(--accent-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tempo-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-primary);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--accent-primary);
+}
+
+.tempo-input {
+  width: 60px;
+  padding: 0.25rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  text-align: right;
+  -moz-appearance: textfield;
+  cursor: text;
+  outline: none;
+}
+
+.tempo-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.tempo-input::-webkit-outer-spin-button,
+.tempo-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.tempo-input::-webkit-inner-spin-button {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.tempo-input:focus {
+  outline: none;
+}
+
+.tempo-input-group span {
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .beat-indicator {
@@ -71,4 +187,15 @@
   .metronome-toggle {
     width: 100%;
   }
+}
+
+@keyframes swing {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
 }

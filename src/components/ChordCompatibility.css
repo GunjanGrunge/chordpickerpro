@@ -31,6 +31,10 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .compatibility-chord::before {
@@ -67,6 +71,21 @@
 .weak-compatibility {
   background: linear-gradient(135deg, #f97316, #c2410c);
   color: white;
+}
+
+.chord-symbol {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.chord-notes {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.compatibility-chord:hover .chord-notes {
+  opacity: 1;
 }
 
 .compatibility-legend {
@@ -110,6 +129,80 @@
 
 .legend-item.weak-compatibility::before {
   background: #f97316;
+}
+
+.progression-section {
+  background: var(--bg-primary);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--accent-primary);
+}
+
+.progression-section h4 {
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.progression-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent-primary);
+  border-radius: 0.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.progression-chords {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.progression-chord {
+  background: var(--bg-secondary);
+  color: white;
+  border: 2px solid var(--accent-primary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  min-width: 120px;
+  text-align: center;
+}
+
+.progression-chord:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-secondary);
+  background: var(--accent-primary);
+}
+
+.position-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent-primary);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border: 2px solid var(--bg-primary);
+}
+
+.compatible-chords-section h4 {
+  color: var(--accent-primary);
+  margin: 1.5rem 0 1rem;
+  font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {

@@ -1,15 +1,17 @@
 {
   "name": "chord-picker-pro",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "homepage": "https://GunjanGrunge.github.io/chordpickerpro",
-  "main": "electron.js",
+  "main": "electron/main.js",
   "dependencies": {
     "@tonaljs/chord": "^4.10.2",
     "@tonaljs/scale": "^4.13.1",
     "@tonaljs/tonal": "^4.10.0",
+    "electron-updater": "^6.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "soundfont-player": "^0.12.0",
     "tonal": "^6.4.0",
     "tone": "^14.7.77"
   },
@@ -19,58 +21,109 @@
     "cross-env": "^7.0.3",
     "electron": "^25.0.0",
     "electron-builder": "^24.4.0",
+    "electron-is-dev": "^3.0.1",
+    "gh-pages": "^4.0.0",
+    "rimraf": "^6.0.1",
     "vite": "^4.3.9",
-    "wait-on": "^7.0.1",
-    "gh-pages": "^4.0.0"
+    "wait-on": "^7.0.1"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "electron:serve": "concurrently -k \"vite --host\" \"wait-on http://localhost:5173 && electron .\"",
-    "electron:build": "vite build && electron-builder",
-    "electron:dev": "cross-env NODE_ENV=development electron .",
+    "electron:build": "npm run build && electron-builder",
+    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "make:win": "npm run build && electron-builder --win --x64",
-    "deploy": "gh-pages -d docs"
+    "deploy": "gh-pages -d docs",
+    "electron:package": "electron-builder -w",
+    "build:win": "npm run build:clean && set NODE_ENV=production && npm run build && electron-builder --win -c.extraMetadata.main=electron/main.js",
+    "build:setup": "set NODE_ENV=production && npm run build && electron-builder --win nsis",
+    "build:portable": "set NODE_ENV=production && npm run build && electron-builder --win portable",
+    "build:clean": "rimraf dist release",
+    "build:installer": "set NODE_ENV=production && npm run build && electron-builder --win nsis --x64",
+    "make:installer": "npm run build:clean && set NODE_ENV=production && npm run build && electron-builder --win --x64 --config.directories.output=./installer",
+    "predeploy": "npm run build:web",
+    "deploy:web": "gh-pages -d dist",
+    "build:web": "vite build --base=/chordpickerpro/ --outDir=dist/web",
+    "build:desktop": "vite build --outDir=dist/desktop"
   },
   "build": {
     "appId": "com.chordpickerpro.app",
     "productName": "Chord Picker Pro",
     "directories": {
       "buildResources": "build",
-      "output": "release"
+      "output": "installer",
+      "app": "."
     },
     "files": [
       "dist/**/*",
-      "electron.js",
-      "build/guitar-pick_icon-icons.com_60160.ico"
+      "electron/**/*",
+      "build/**/*",
+      "package.json"
     ],
     "win": {
       "icon": "build/guitar-pick_icon-icons.com_60160.ico",
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
         }
-      ]
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "forceCodeSigning": false
     },
     "mac": {
       "icon": "build/icons/icon.icns",
-      "target": ["dmg"]
+      "target": [
+        "dmg"
+      ]
     },
     "linux": {
       "icon": "build/icons/icon.png",
-      "target": ["AppImage"]
+      "target": [
+        "AppImage"
+      ]
     },
     "nsis": {
-      "oneClick": true,
+      "oneClick": false,
       "perMachine": false,
-      "allowToChangeInstallationDirectory": false,
+      "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Chord Picker Pro"
-    }
+      "shortcutName": "Chord Picker Pro",
+      "installerIcon": "build/guitar-pick_icon-icons.com_60160.ico",
+      "uninstallerIcon": "build/guitar-pick_icon-icons.com_60160.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "allowElevation": true,
+      "runAfterFinish": true,
+      "installerHeaderIcon": "build/guitar-pick_icon-icons.com_60160.ico",
+      "menuCategory": true,
+      "license": "LICENSE.txt",
+      "deleteAppDataOnUninstall": false
+    },
+    "asar": true,
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "extraResources": [
+      {
+        "from": "build",
+        "to": "build",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   }
 }

@@ -9,6 +9,8 @@ import { audioEngine } from './utils/audio';
 import './App.css';
 import Metronome from './components/Metronome';
 import ChordCompatibility from './components/ChordCompatibility';
+import InstrumentControls from './components/InstrumentControls';
+import ScaleFinder from './components/ScaleFinder';
 
 function App() {
   const [selectedNotes, setSelectedNotes] = useState([]);
@@ -20,6 +22,7 @@ function App() {
   const [volume, setVolume] = useState(-10);
   const [selectedOctave, setSelectedOctave] = useState(5);
   const [tempo, setTempo] = useState(120);
+  const [isScaleFinderOpen, setIsScaleFinderOpen] = useState(false);
 
   const keys = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'F']; // Circle of fifths order
   const scaleTypes = ['major', 'minor', 'dorian', 'mixolydian', 'pentatonic'];
@@ -39,8 +42,30 @@ function App() {
   }, [selectedKey, scaleType, selectedProgression]);
 
   useEffect(() => {
-    audioEngine.synth.volume.value = volume;
+    audioEngine.setVolume(volume);
   }, [volume]);
+
+  // Add initialization effect
+  useEffect(() => {
+    const initAudio = async () => {
+      const handleFirstInteraction = async () => {
+        try {
+          await audioEngine.init();
+          // Remove event listeners after initialization
+          document.removeEventListener('click', handleFirstInteraction);
+          document.removeEventListener('keydown', handleFirstInteraction);
+        } catch (error) {
+          console.error('Failed to initialize audio:', error);
+        }
+      };
+
+      // Add event listeners for user interaction
+      document.addEventListener('click', handleFirstInteraction);
+      document.addEventListener('keydown', handleFirstInteraction);
+    };
+
+    initAudio();
+  }, []);
 
   const handleNoteClick = (note) => {
     const fullNote = note; // Now includes octave number
@@ -71,6 +96,11 @@ function App() {
   const handleReset = () => {
     setSelectedNotes([]);
     setChordPositions([]);
+  };
+
+  const handleScaleSelect = (tonic, type) => {
+    setSelectedKey(tonic);
+    setScaleType(type);
   };
 
   const renderCircleOfFifths = () => {
@@ -137,6 +167,13 @@ function App() {
           <span>{showCircle ? 'Hide' : 'Show'} Circle of Fifths</span>
         </button>
 
+        <button 
+          className="scale-finder-button" 
+          onClick={() => setIsScaleFinderOpen(true)}
+        >
+          Find Scale
+        </button>
+
         <div className="scale-controls">
           <select 
             value={scaleType} 
@@ -146,20 +183,15 @@ function App() {
               <option key={scale} value={scale}>{scale}</option>
             ))}
           </select>
-          <select 
-            value={selectedProgression} 
-            onChange={(e) => setSelectedProgression(e.target.value)}
-          >
-            <option value="">Select Progression</option>
-            {Object.keys(chordProgressions).map(prog => (
-              <option key={prog} value={prog}>{chordProgressions[prog].name}</option>
-            ))}
-          </select>
+          <ScaleFinder onScaleSelect={handleScaleSelect} />
         </div>
       </div>
 
       {showCircle && (
-        <div className="circle-container">
+        <div 
+          className="circle-container"
+          data-selected-scale={`${selectedKey} ${scaleType}`}
+        >
           {renderCircleOfFifths()}
         </div>
       )}
@@ -169,6 +201,12 @@ function App() {
         scaleType={scaleType} 
         onNoteClick={handleNoteClick}
         selectedOctave={selectedOctave}
+      />
+
+      <ScaleFinder 
+        onScaleSelect={handleScaleSelect} 
+        isOpen={isScaleFinderOpen}
+        onClose={() => setIsScaleFinderOpen(false)}
       />
 
       <div className="metronome-section">
@@ -197,6 +235,7 @@ function App() {
       />
 
       <div className="piano-section">
+        <InstrumentControls />
         <div className="piano-controls">
           <div className="control-group">
             <label htmlFor="volume">
